@@ -16,6 +16,7 @@
 %         - sigma:           sigma of additive white gaussian noise
 %
 %     - optional
+%         - beta:            parameter used in stage 2 of algorithm       - default 1.75 (see paper)
 %         - max_iterations:  limit number of iterations                   - default 40
 %         - show_iterations: display updated output estimate at each step - default 1
 %
