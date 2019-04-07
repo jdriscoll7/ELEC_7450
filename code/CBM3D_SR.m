@@ -55,9 +55,8 @@ function upsampled_image = SR_CBM3D(input_image, scale, sigma, beta, max_iterati
         % Stage 2 - Next iterate is current iterate, plus the weighted, upsampled 
         %           difference between the original image and the downscaled version
         %           of the current iterate.
-        upsampled_image = upsampled_image + beta*imresize(input_image - imresize(upsampled_image, 1/s, 'bicubic'), 
-                                                          s, 
-                                                          'bicubic');
+        downsampled_iterate = imresize(upsampled_image, 1/s, 'bicubic');
+        upsampled_image = upsampled_image + beta*imresize(input_image - downsampled_iterate, s, 'bicubic');
                                                           
         % Display iterate if needed.
         if (show_iterations == 1)
