@@ -9,8 +9,22 @@
 % - Main function that implements the super-resolution algorithm.
 %
 % - Arguments:
-%     - input_image: original (possibly noisy) input image
-%     - scale:       mxn scaling/upsampling ratio
-%     - sigma:       sigma of additive white gaussian noise
+%     - required
+%         - input_image:     original (possibly noisy) input image
+%         - scale:           scaling/upsampling ratio
+%         - sigma:           sigma of additive white gaussian noise
+%     - optional
+%         - max_iterations:  limit number of iterations - default 40
+%         - show_iterations: display updated output estimate at each step
 %
-function upsampled_image = SR_CBM3D(input_image, scale, sigma)
+function upsampled_image = SR_CBM3D(input_image, scale, sigma, max_iterations, show_iterations)
+
+    % Denoise the input image using BM3D before upsampling (may not be needed).
+    [unused, filtered_input] = BM3D(1, input_image, sigma);
+
+    % Make initial estimate using bicubic interpolation.
+    upsampled_image = imresize(input_image, scale, 'bicubic');
+    
+    % Set default parameters 
+    
+end
