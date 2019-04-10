@@ -20,7 +20,7 @@
 %         - max_iterations:  limit number of iterations                   - default 40
 %         - show_iterations: display updated output estimate at each step - default 1
 %
-function upsampled_image = SR_CBM3D(input_image, scale, sigma, beta, max_iterations, show_iterations)
+function upsampled_image = SR_CBM3D(input_image, scale, sigma, beta, max_iterations)
 
     % Convert input image to double.
     input_image = double(input_image)/255;
@@ -40,16 +40,6 @@ function upsampled_image = SR_CBM3D(input_image, scale, sigma, beta, max_iterati
         max_iterations = 40;
     end
     
-    if (exist('show_iterations') ~= 1)
-        show_iterations = 1;
-    end
-    
-    % Show the 0-th iterate if needed.
-    if (show_iterations == 1)
-        figure; imagesc(upsampled_image); axis off;
-        title('Iterate 0');
-    end
-    
     % Main loop that performs the main portion of the algorithm.
     for i = 1:max_iterations
     
@@ -61,12 +51,6 @@ function upsampled_image = SR_CBM3D(input_image, scale, sigma, beta, max_iterati
         %           of the current iterate.
         downsampled_iterate = imresize(upsampled_image, 1/scale, 'bicubic');
         upsampled_image = upsampled_image + beta*imresize(filtered_input - downsampled_iterate, scale, 'bicubic');
-                                                          
-        % Display iterate if needed.
-        if (show_iterations == 1)
-            imagesc(uint8(255*upsampled_image));
-            title(['Iterate ', num2str(i)]);
-        end
     
     end
     
